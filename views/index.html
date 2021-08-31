@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>URL Shortner</title>
+		<style>
+			body {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				background: rgb(241, 240, 240);
+				font-family: sans-serif;
+			}
+
+			form {
+				display: flex;
+				flex-direction: column;
+				gap: 2rem;
+			}
+
+			input {
+				padding: 1rem;
+				border: none;
+			}
+
+			input:focus {
+				outline: 1px solid black;
+			}
+
+			button {
+				border: none;
+				border-radius: 0.5rem;
+				padding: 0.8rem;
+				font-size: 1em;
+				cursor: pointer;
+				background: palegreen;
+			}
+
+			button:hover {
+				box-shadow: 1px 2px 8px 1px palegreen;
+			}
+			ul {
+				list-style-type: none;
+				padding: 0;
+				margin-bottom: 0;
+			}
+
+			li {
+				padding: 10px;
+				border-radius: 5px;
+				border: 1px solid rgba(0, 0, 0, 0.2);
+				margin-bottom: 10px;
+			}
+
+			#urlNotValid {
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>URL Shortner</h1>
+		<form action="/shorten" method="POST">
+			<input type="text" id="url" name="url" placeholder="Enter your URL here" />
+			<p id="urlNotValid"></p>
+			<button id="submitButton">Shorten It!</button>
+		</form>
+		<h3>History</h3>
+		{{history}}
+		<script>
+			function isValidHttpUrl(string) {
+				let url;
+
+				try {
+					url = new URL(string);
+				} catch (_) {
+					return false;
+				}
+
+				return url.protocol === "http:" || url.protocol === "https:";
+			}
+
+			submitButton.setAttribute('disabled', '');
+
+			url.addEventListener('input', (event)=> {
+				if (isValidHttpUrl(event.target.value)) {
+					urlNotValid.textContent = '';
+					submitButton.removeAttribute('disabled');
+				} else {
+					submitButton.setAttribute('disabled', '');
+					urlNotValid.textContent = 'URL NOT VALID';
+				}
+			});
+		</script>
+	</body>
+</html>

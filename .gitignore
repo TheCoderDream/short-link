@@ -1,0 +1,5 @@
+node_modules/
+package-lock.json
+libiconv2.dll
+libintl3.dll
+make.exe
